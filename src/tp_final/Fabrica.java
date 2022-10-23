@@ -38,15 +38,15 @@ public class Fabrica {
 	////////////////////////////////////////////////////////////////////////
 
 	Album crearAlbumWeb() {
-        throw new RuntimeException("A Implementar");
+        return new AlbumWeb(paisesParticipantes);
 	}
 
 	Album crearAlbumExtendido() {
-        throw new RuntimeException("A Implementar");
+        return new AlbumExtendido(paisesParticipantes, listadoDeMundialesTop10);
 	}
 
 	Album crearAlbumTradicional() {
-		throw new RuntimeException("A Implementar");
+		return new AlbumTradicional(paisesParticipantes);
 	}
 
 	List<Figurita> generarSobre(int cantFigus) {
