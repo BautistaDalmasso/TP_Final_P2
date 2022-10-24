@@ -2,6 +2,7 @@ package tp_final;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -18,6 +19,7 @@ public class Fabrica {
 	private Map<String, String[]> balonYPaisPorMundialTop10;
 	private Map<String, Integer> ranking;
 
+	
 	Fabrica() {
 		random = new Random(System.currentTimeMillis());
 		lugaresPorPais = 12;
@@ -26,7 +28,9 @@ public class Fabrica {
 		balonYPaisPorMundialTop10 = generarPaisesPorMundial();
 		ranking = generarRanking();
 		premiosInstantaneos = generarPremiosParaSorteoInstantaneo();
-	}
+		
+		// Contienen toda la información de un país en un objeto.
+}
 	
 	////////////////////////////////////////////////////////////////////////
 	// NOTA: Deben implementar los siguientes metodos segun su modelo     //
@@ -50,14 +54,79 @@ public class Fabrica {
 	}
 
 	List<Figurita> generarSobre(int cantFigus) {
-		throw new RuntimeException("A Implementar");
+		LinkedList<Figurita> sobre = new LinkedList<Figurita>();
+		
+		for (int i = 0; i < 4; i++) {
+			sobre.add(generarFigurita());
+		}
+		
+		return sobre;
 	}		
 
+	private FiguritaTradicional generarFigurita() {
+		/* Genera una única figurita tradicional de manera aleatoria. */
+		
+		// Selecciona un país aleatorio.
+		int indicePais = random.nextInt(paisesParticipantes.length);
+		String nombrePais = paisesParticipantes[indicePais];
+		Pais paisJugador = generarPais(nombrePais);
+		// Crea un jugador aleatorio.
+		int numeroJugador = random.nextInt(1, 12+1);  // Numeros de jugador van del 1 al 12.
+		String nombreJugador = "Jugador " + numeroJugador;
+		
+		FiguritaTradicional resultado = new FiguritaTradicional(
+				paisJugador, 
+				calcularValorBase(nombrePais, numeroJugador),
+				nombreJugador
+		);
+		
+		return resultado;
+	}
+	
 	List<Figurita> generarSobreTop10(int cantFigus) {
-		throw new RuntimeException("A Implementar");
+		LinkedList<Figurita> sobre = new LinkedList<Figurita>();
+		
+		for (int i = 0; i < 4; i++) {
+			sobre.add(generarFiguritaTop10());
+		}
+		
+		return sobre;
 	}
 
+	private FiguritaTOP10 generarFiguritaTop10() {
+		/* Genera una única figurita Top 10 de manera aleatoria. */
 
+		// Selecciona un mundial aleatorio.
+		int indiceMundial = random.nextInt(listadoDeMundialesTop10.length);
+		String mundial = listadoDeMundialesTop10[indiceMundial];
+		
+		// Selecciona un balon aleatorio.
+		int numeroDeBalon = random.nextInt(0, 1+1);
+		String balon = numeroDeBalon == 0 ? "Oro" : "Plata";
+		
+		// Crea el pais del jugador que gano el balon.
+		String nombrePais = balonYPaisPorMundialTop10.get(mundial)[numeroDeBalon];
+		Pais paisJugador = generarPais(nombrePais);
+
+		// Crea un jugador aleatorio.
+		int numeroJugador = random.nextInt(1, 12+1);  // Numeros de jugador van del 1 al 12.
+		String nombreJugador = "Jugador " + numeroJugador;
+		
+		FiguritaTOP10 resultado = new FiguritaTOP10(
+				paisJugador,
+				calcularValorBase(nombrePais, numeroJugador),
+				nombreJugador,
+				mundial,
+				balon
+		);
+		
+		return resultado;
+	}
+	
+	private Pais generarPais(String nombrePais) {
+		return new Pais(nombrePais, ranking.get(nombrePais));
+	}
+	
 	///////////////////////////////////////////////////////
 	///////////// METODOS FACILITADOS POR LA CATEDRA //////
 	///////////////////////////////////////////////////////
