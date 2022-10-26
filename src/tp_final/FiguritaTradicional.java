@@ -13,6 +13,9 @@
 
 
 public class FiguritaTradicional extends Figurita {
-	private Pais pais;
-	public Album Unnamed1;
+
+	public FiguritaTradicional(Pais paisJugador, double valorBase, String nombreJugador) {
+		super(paisJugador, valorBase, nombreJugador);
+	}
+
 }
