@@ -8,12 +8,15 @@ public abstract class Figurita {
 	private int numeroIdentificador;
 	private double valorBase;
 	private String nombreJugador;
+	private int numJugador;
 	
 	
-	public Figurita(Pais paisJugador, double valorBase, String nombreJugador) {
+	public Figurita(Pais paisJugador, double valorBase, String nombreJugador, 
+			int numJugador) {
 		this.paisJugador = paisJugador;
 		this.valorBase = valorBase;
 		this.nombreJugador = nombreJugador;
+		this.numJugador = numJugador;
 		
 		numeroIdentificador = hashCode();
 	}
@@ -28,6 +31,9 @@ public abstract class Figurita {
 		return numeroIdentificador;
 	}
 	
+	public String getNombrePais() {
+		return paisJugador.verNombre();
+	}
 	
 	@Override
 	public int hashCode() {
@@ -46,6 +52,17 @@ public abstract class Figurita {
 		Figurita other = (Figurita) obj;
 		
 		return this.numeroIdentificador == other.numeroIdentificador;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return paisJugador.verNombre() + "-" + numJugador;
+	}
+
+
+	public int verNumJugador() {
+		return numJugador;
 	}
 	
 	

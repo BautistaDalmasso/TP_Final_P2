@@ -14,11 +14,11 @@ public class Pais {
 
 
 	public int verRanking() {
-	
+		return ranking;
 	}
 	
 	public String verNombre() {
-	
+		return nombre;
 	}
 
 	@Override
