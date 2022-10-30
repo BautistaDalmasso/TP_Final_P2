@@ -1,6 +1,5 @@
 package tp_final;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -127,7 +126,10 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	}
 	
 	public int buscarFiguritaRepetida(int dni) {
-	
+		asegurarRegistro(dni);
+		
+		Participante p = coleccionistasParticipantes.get(dni);
+		return p.buscarFiguritaRepetida();
 	}
 	
 	public boolean intercambiar(int dni, int codigoFigurita) {

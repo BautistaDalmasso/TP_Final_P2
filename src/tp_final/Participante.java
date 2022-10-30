@@ -104,4 +104,11 @@ public class Participante {
 	public String verPremio() {
 		return album.getPremio();
 	}
+
+	public int buscarFiguritaRepetida() {
+		if (figuritasRepetidas.isEmpty()) {
+			return -1;
+		}
+		return figuritasRepetidas.get(0).getNumeroIdentificador();
+	}
 }
