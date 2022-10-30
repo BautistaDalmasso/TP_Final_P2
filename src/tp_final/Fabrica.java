@@ -1,6 +1,5 @@
 package tp_final;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -77,7 +76,8 @@ public class Fabrica {
 		FiguritaTradicional resultado = new FiguritaTradicional(
 				paisJugador, 
 				calcularValorBase(nombrePais, numeroJugador),
-				nombreJugador
+				nombreJugador,
+				numeroJugador
 		);
 		
 		return resultado;
@@ -116,6 +116,7 @@ public class Fabrica {
 				paisJugador,
 				calcularValorBase(nombrePais, numeroJugador),
 				nombreJugador,
+				numeroJugador,
 				mundial,
 				balon
 		);

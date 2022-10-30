@@ -89,16 +89,13 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		
 		codigosPromocionalesRedimidos.add(codigoPromocional);
 	}
-	
-	private void asegurarRegistro(int dni) {
-		// Provoca un error si el dni no esta registrado en participantes.
-		if (!coleccionistasParticipantes.containsKey(dni)) {
-			throw new RuntimeException("Participante no registrado.");
-		}
-	}
 
 	public List<String> pegarFiguritas(int dni) {
-	
+		asegurarRegistro(dni);
+		
+		Participante p = coleccionistasParticipantes.get(dni);
+		
+		return p.pegarFiguritas();
 	}
 	
 	public boolean llenoAlbum(int dni) {
@@ -151,5 +148,12 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	
 	public List<String> verParticipantesConArgentinaCompletado() {
 	
+	}
+	
+	private void asegurarRegistro(int dni) {
+		// Provoca un error si el dni no esta registrado en participantes.
+		if (!coleccionistasParticipantes.containsKey(dni)) {
+			throw new RuntimeException("Participante no registrado.");
+		}
 	}
 }

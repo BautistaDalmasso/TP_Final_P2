@@ -2,6 +2,8 @@ package tp_final;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public abstract class Album {
@@ -23,12 +25,34 @@ public abstract class Album {
 	}
 
 	
-	public boolean figuritaEstaPegada(int codigoFigurita) {
-	
+	public boolean figuritaEstaPegada(Figurita figurita) {
+		ArrayList<Figurita> pagina = 
+				seccionPaisesParticipantes.get(figurita.getNombrePais());
+		
+		return pagina.contains(figurita);
 	}
 	
-	public Lista<Figurita> pegarFiguritas(Lista<Figurita> figuritas) {
+	public List<String> pegarFiguritas(List<Figurita> figuritas) {
+		LinkedList<String> resultado = new LinkedList<String>();
+		
+		for (Figurita f: figuritas) {
+			pegarFigurita(f);
+			
+			resultado.add(f.toString());
+		}
+		
+		return resultado;
+	}
 	
+	public void pegarFigurita(Figurita figurita) {
+		if (figuritaEstaPegada(figurita)) {
+			throw new RuntimeException("Tratando de pegar figurita repetida.");
+		}
+		
+		String nombrePais = figurita.getNombrePais();
+		ArrayList<Figurita> pagina = seccionPaisesParticipantes.get(nombrePais);
+		
+		pagina.add(figurita);
 	}
 	
 	public boolean verificarAlbumCompleto() {
