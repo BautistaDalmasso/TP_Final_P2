@@ -15,6 +15,6 @@ public class AlbumWeb extends Album {
 
 
 	public int verCodigoPromocional() {
-	
+		return codigoPromocional;
 	}
 }

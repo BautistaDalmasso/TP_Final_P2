@@ -38,11 +38,33 @@ public class Participante {
 	
 	}
 	
-	public Figurita buscarFiguritaIntercambiable(Object double valorFigurita) {
+	public Figurita buscarFiguritaIntercambiable(double valorFigurita) {
 	
 	}
 	
 	public int verCodigoAlbum() {
 		return album.getCodigoUnico();
+	}
+
+	public String verTipoDeAlbum() {
+		return tipoDeAlbum;
+	}
+
+	public int verCodigoPromocional() {
+		if (!tipoDeAlbum.equals("Web")) {
+			throw new RuntimeException("Solo albumes web tienen codigo promocional.");
+		}
+		AlbumWeb album = (AlbumWeb) this.album;
+		return album.verCodigoPromocional();
+	}
+
+	public int verNumeroParaSorteo() {
+		if (!tipoDeAlbum.equals("Tradicional")) {
+			throw new RuntimeException("Necesita un album tradicional.");
+		}
+		
+		AlbumTradicional album = (AlbumTradicional) this.album;
+		
+		return album.verNumeroParaSorteo();
 	}
 }
