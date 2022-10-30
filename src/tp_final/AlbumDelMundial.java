@@ -2,6 +2,7 @@ package tp_final;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AlbumDelMundial implements IAlbumDelMundial {
@@ -42,9 +43,15 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	}
 	
 	public void comprarFiguritas(int dni) {
-	
+		asegurarRegistro(dni);
+
+		Participante comprador = coleccionistasParticipantes.get(dni);
+
+		List<Figurita> sobre = fabrica.generarSobre(4);
+
+		comprador.agregarFiguritasAColeccion(sobre);
 	}
-	
+
 	public void comprarFiguritasTop10(int dni) {
 	
 	}
@@ -53,6 +60,13 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	
 	}
 	
+	private void asegurarRegistro(int dni) {
+		// Provoca un error si el dni no esta registrado en participantes.
+		if (!coleccionistasParticipantes.containsKey(dni)) {
+			throw new RuntimeException("Participante no registrado.");
+		}
+	}
+
 	public List<String> pegarFiguritas(int dni) {
 	
 	}
