@@ -34,7 +34,12 @@ public class Participante {
 	}
 	
 	public List<String> pegarFiguritas() {
-		return album.pegarFiguritas(coleccionDeFiguritas);
+		List<String> resultado = album.pegarFiguritas(coleccionDeFiguritas);
+		
+		// Vacia las figuritas una vez que fueron pegadas.
+		coleccionDeFiguritas = new LinkedList<Figurita>();
+		
+		return resultado;
 	}
 	
 	public boolean verificarAlbumCompleto() {
