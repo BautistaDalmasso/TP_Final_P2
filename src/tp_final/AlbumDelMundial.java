@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AlbumDelMundial {	
+public class AlbumDelMundial implements IAlbumDelMundial {
 	private Map<Integer, Participante> coleccionistasParticipantes;
 	private Fabrica fabrica;
 	

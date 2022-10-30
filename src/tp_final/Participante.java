@@ -38,7 +38,7 @@ public class Participante {
 	
 	}
 	
-	public Figurita buscarFiguritaIntercambiable(Object double valorFigurita) {
+	public Figurita buscarFiguritaIntercambiable(double valorFigurita) {
 	
 	}
 	
