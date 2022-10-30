@@ -78,7 +78,7 @@ public class AlbumDelMundialTest {
 	
 	@Test(expected=RuntimeException.class)
 	public void t07_cambiarCodigoPromocionaSinAlbumWeb_GeneraError() {
-		sistema.comprarFiguritasTop10(dniConAlbumTradicional);
+		sistema.comprarFiguritasConCodigoPromocional(dniConAlbumTradicional);
 	}
 	
 	// Aplicar Sorteo instantaneo de Album tradicional
