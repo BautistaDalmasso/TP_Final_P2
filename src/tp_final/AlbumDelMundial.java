@@ -139,11 +139,23 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	}
 	
 	public String darNombre(int dni) {
-	
+		asegurarRegistro(dni);
+		
+		Participante p = coleccionistasParticipantes.get(dni);
+		
+		return p.verNombre();
 	}
 	
 	public String darPremio(int dni) {
-	
+		asegurarRegistro(dni);
+		
+		Participante p = coleccionistasParticipantes.get(dni);
+		
+		if (!p.verificarAlbumCompleto()) {
+			throw new RuntimeException("Album no esta completo.");
+		}
+		
+		return p.verPremio();
 	}
 	
 	public String listadoDeGanadores() {

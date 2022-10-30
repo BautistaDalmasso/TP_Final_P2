@@ -96,4 +96,12 @@ public class Participante {
 	public boolean verificarPaisCompleto(String nombrePais) {
 		return album.verificarPaisCompleto(nombrePais);
 	}
+
+	public String verNombre() {
+		return nombreDeUsuario;
+	}
+
+	public String verPremio() {
+		return album.getPremio();
+	}
 }
