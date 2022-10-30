@@ -1,6 +1,8 @@
 package tp_final;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -16,14 +18,43 @@ public class AlbumExtendido extends Album {
 		generarSeccionMejoresJugadores(listadoDeMundiales);
 	}
 
-	public boolean figuritaEstaPegada(int codigoFigurita) {
-	
+	@Override
+	public boolean figuritaEstaPegada(Figurita figurita) {
+		if (figurita instanceof FiguritaTOP10) {
+			ArrayList<FiguritaTOP10> pagina =
+					seccionMejoresJugadores.get(figurita.getNombrePais());
+			return pagina.contains(figurita);
+		}
+		
+		return super.figuritaEstaPegada(figurita);
 	}
 	
-	public Lista<Figurita> pegarFiguritas(Lista<Figurita> figuritas) {
-	
+	@Override
+	public List<String> pegarFiguritas(List<Figurita> figuritas) {
+		LinkedList<String> resultado = new LinkedList<String>();
+		
+		for (Figurita f: figuritas) {			
+			if (f instanceof FiguritaTOP10) {
+				pegarFiguritaTop10(f);
+				resultado.add(f.toString());
+			}
+			else {
+				super.pegarFigurita(f);
+				resultado.add(f.toString());
+			}
+		}
+		
+		return resultado;
 	}
 	
+	private void pegarFiguritaTop10(Figurita f) {
+		ArrayList<FiguritaTOP10> pagina = 
+				seccionMejoresJugadores.get(f.getNombrePais());
+		
+		pagina.add((FiguritaTOP10) f);
+	}
+
+	@Override
 	public boolean verificarAlbumCompleto() {
 	
 	}

@@ -44,7 +44,7 @@ public abstract class Album {
 		return resultado;
 	}
 	
-	private void pegarFigurita(Figurita figurita) {
+	public void pegarFigurita(Figurita figurita) {
 		if (figuritaEstaPegada(figurita)) {
 			throw new RuntimeException("Tratando de pegar figurita repetida.");
 		}
