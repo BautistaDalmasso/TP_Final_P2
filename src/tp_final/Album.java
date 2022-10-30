@@ -26,7 +26,10 @@ public abstract class Album {
 
 	
 	public boolean figuritaEstaPegada(Figurita figurita) {
-	
+		ArrayList<Figurita> pagina = 
+				seccionPaisesParticipantes.get(figurita.getNombrePais());
+		
+		return pagina.contains(figurita);
 	}
 	
 	public List<String> pegarFiguritas(List<Figurita> figuritas) {

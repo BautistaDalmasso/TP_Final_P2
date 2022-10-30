@@ -23,11 +23,18 @@ public class Participante {
 	}
 
 	public void agregarFiguritasAColeccion(List<Figurita> figuritas) {
-	
+		for (Figurita f : figuritas) {
+			if (coleccionDeFiguritas.contains(f) ||
+					album.figuritaEstaPegada(f)) {
+				figuritasRepetidas.add(f);
+			} else {
+				coleccionDeFiguritas.add(f);
+			}
+		}
 	}
 	
 	public List<String> pegarFiguritas() {
-	
+		return album.pegarFiguritas(coleccionDeFiguritas);
 	}
 	
 	public boolean verificarAlbumCompleto() {
