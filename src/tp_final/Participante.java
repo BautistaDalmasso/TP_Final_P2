@@ -43,11 +43,11 @@ public class Participante {
 	}
 	
 	public boolean verificarAlbumCompleto() {
-	
+		return album.verificarAlbumCompleto();
 	}
 	
 	public boolean verificarArgentinaCompleto() {
-	
+		return album.verificarArgentinaCompleto();
 	}
 	
 	public Figurita buscarFiguritaIntercambiable(double valorFigurita) {
@@ -78,5 +78,22 @@ public class Participante {
 		AlbumTradicional album = (AlbumTradicional) this.album;
 		
 		return album.verNumeroParaSorteo();
+	}
+	
+	public String toString() {
+		return "(" + dni + ") " + nombreDeUsuario;
+	}
+	
+	public String toStringInformativo() {
+		return toString() + ": " + tipoDeAlbum;
+	}
+	
+	public String ganadorString() {
+		// String utilizado para lista de participantes ganadores.
+		return " - " + toString() + ": " + album.getPremio();
+	}
+
+	public boolean verificarPaisCompleto(String nombrePais) {
+		return album.verificarPaisCompleto(nombrePais);
 	}
 }
