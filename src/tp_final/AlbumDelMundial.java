@@ -151,7 +151,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		
 		for (Participante p : listaParticipantes) {
 			if (p.verificarAlbumCompleto()) {
-				resultado.append(p.toString());
+				resultado.append(p.ganadorString());
 			}
 		}
 		
@@ -159,11 +159,19 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	}
 	
 	public List<String> participantesQueCompletaronElPais(String nombrePais) {
-	
+		LinkedList<String> resultado = new LinkedList<String>();
+		
+		for (Participante p: listaParticipantes) {
+			if (p.verificarPaisCompleto(nombrePais)) {
+				resultado.add(p.toStringInformativo());
+			}
+		}
+		
+		return resultado;
 	}
 	
 	public List<String> verParticipantesConArgentinaCompletado() {
-	
+		return participantesQueCompletaronElPais("Argentina");
 	}
 	
 	private void asegurarRegistro(int dni) {

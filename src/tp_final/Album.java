@@ -69,7 +69,7 @@ public abstract class Album {
 	}
 	
 	public boolean verificarArgentinaCompleto() {
-		return seccionPaisesParticipantes.get("Argentina").size() == 12;
+		return verificarPaisCompleto("Argentina");
 	}
 	
 	public int getCodigoUnico() {
@@ -92,5 +92,10 @@ public abstract class Album {
 
 	public String getPremio() {
 		return premios;
+	}
+
+
+	public boolean verificarPaisCompleto(String nombrePais) {
+		return seccionPaisesParticipantes.get(nombrePais).size() == 12;
 	}
 }

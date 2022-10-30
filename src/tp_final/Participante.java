@@ -81,6 +81,19 @@ public class Participante {
 	}
 	
 	public String toString() {
-		return " - (" + dni + ") " + nombreDeUsuario + ": " + album.getPremio();
+		return "(" + dni + ") " + nombreDeUsuario;
+	}
+	
+	public String toStringInformativo() {
+		return toString() + ": " + tipoDeAlbum;
+	}
+	
+	public String ganadorString() {
+		// String utilizado para lista de participantes ganadores.
+		return " - " + toString() + ": " + album.getPremio();
+	}
+
+	public boolean verificarPaisCompleto(String nombrePais) {
+		return album.verificarPaisCompleto(nombrePais);
 	}
 }
