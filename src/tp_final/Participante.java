@@ -45,4 +45,16 @@ public class Participante {
 	public int verCodigoAlbum() {
 		return album.getCodigoUnico();
 	}
+
+	public String verTipoDeAlbum() {
+		return tipoDeAlbum;
+	}
+
+	public int verCodigoPromocional() {
+		if (!tipoDeAlbum.equals("Web")) {
+			throw new RuntimeException("Solo albumes web tienen codigo promocional.");
+		}
+		AlbumWeb album = (AlbumWeb) this.album;
+		return album.verCodigoPromocional();
+	}
 }

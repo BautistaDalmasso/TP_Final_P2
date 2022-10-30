@@ -2,6 +2,7 @@ package tp_final;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,9 +10,13 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	private Map<Integer, Participante> coleccionistasParticipantes;
 	private Fabrica fabrica;
 	
+	private List<Integer> codigosPromocionalesRedimidos;
+	
 	public AlbumDelMundial() {
 		coleccionistasParticipantes = new HashMap<Integer, Participante>();
 		fabrica = new Fabrica();
+		
+		codigosPromocionalesRedimidos = new LinkedList<Integer>();
 	}
 
 	public int registrarParticipante(int dni, String nombre, String tipoDeAlbum) {
@@ -48,16 +53,39 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		Participante comprador = coleccionistasParticipantes.get(dni);
 
 		List<Figurita> sobre = fabrica.generarSobre(4);
-
 		comprador.agregarFiguritasAColeccion(sobre);
 	}
 
 	public void comprarFiguritasTop10(int dni) {
-	
+		asegurarRegistro(dni);
+
+		Participante comprador = coleccionistasParticipantes.get(dni);
+		
+		if (!comprador.verTipoDeAlbum().equals("Extendido")) {
+			throw new RuntimeException("Comprador debe tener un album extendido.");
+		}
+		
+		List<Figurita> sobre = fabrica.generarSobreTop10(4);
+		comprador.agregarFiguritasAColeccion(sobre);
 	}
 	
 	public void comprarFiguritasConCodigoPromocional(int dni) {
-	
+		asegurarRegistro(dni);
+		
+		Participante comprador = coleccionistasParticipantes.get(dni);
+		
+		if (!comprador.verTipoDeAlbum().equals("Web")) {
+			throw new RuntimeException("Comprador debe tener un album web.");
+		}
+		int codigoPromocional = comprador.verCodigoPromocional();
+		if (codigosPromocionalesRedimidos.contains(codigoPromocional)) {
+			throw new RuntimeException("Código ya redimido");
+		}
+		
+		List<Figurita> sobre = fabrica.generarSobre(4);
+		comprador.agregarFiguritasAColeccion(sobre);
+		
+		codigosPromocionalesRedimidos.add(codigoPromocional);
 	}
 	
 	private void asegurarRegistro(int dni) {
