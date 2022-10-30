@@ -51,7 +51,21 @@ public class Participante {
 	}
 	
 	public Figurita buscarFiguritaIntercambiable(double valorFigurita) {
-	
+		/* Trata de devolver una figurita repetida de mayor valor posible,
+		manteniendose en un valor <= a valorFigurita. */
+		Figurita resultado = null;
+		
+		for (Figurita f : figuritasRepetidas) {
+			if (f.calcularPrecio() <= valorFigurita) {
+				if (resultado == null ||
+						resultado.calcularPrecio() < f.calcularPrecio()) 
+				{
+					resultado = f;
+				}
+			}
+		}
+		
+		return resultado;
 	}
 	
 	public int verCodigoAlbum() {
