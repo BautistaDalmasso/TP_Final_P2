@@ -1,4 +1,4 @@
-package tp_final
+package tp_final;
 
 import java.util.Objects;
 
@@ -17,10 +17,13 @@ public class FiguritaTOP10 extends Figurita {
 
 
 
+	@Override
 	public double calcularPrecio() {
-	
+		double aumentoDePrecio = balonGanado.equals("Oro") ?
+				20/100 : 10/100;
+		
+		return super.calcularPrecio() + super.calcularPrecio()*aumentoDePrecio;
 	}
-
 
 
 	@Override
