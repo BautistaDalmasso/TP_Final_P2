@@ -99,7 +99,11 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	}
 	
 	public boolean llenoAlbum(int dni) {
-	
+		asegurarRegistro(dni);
+		
+		Participante p = coleccionistasParticipantes.get(dni);
+		
+		return p.verificarAlbumCompleto();
 	}
 	
 	public String aplicarSorteoInstantaneo(int dni) {

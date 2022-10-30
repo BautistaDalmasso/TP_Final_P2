@@ -43,11 +43,11 @@ public class Participante {
 	}
 	
 	public boolean verificarAlbumCompleto() {
-	
+		return album.verificarAlbumCompleto();
 	}
 	
 	public boolean verificarArgentinaCompleto() {
-	
+		return album.verificarArgentinaCompleto();
 	}
 	
 	public Figurita buscarFiguritaIntercambiable(double valorFigurita) {
