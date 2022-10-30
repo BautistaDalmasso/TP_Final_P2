@@ -10,11 +10,12 @@ public class AlbumExtendido extends Album {
 	private static String PREMIO_EXTENDIDO = "Una pelota y un viaje";
 	
 	private Map<String, ArrayList<FiguritaTOP10>> seccionMejoresJugadores;
-	
+	private String[] mundiales;
 	
 	public AlbumExtendido(String[] paisesClasificados, String[] listadoDeMundiales) {
 		super(paisesClasificados, PREMIO_EXTENDIDO);
 		
+		this.mundiales = listadoDeMundiales;
 		generarSeccionMejoresJugadores(listadoDeMundiales);
 	}
 
@@ -56,7 +57,14 @@ public class AlbumExtendido extends Album {
 
 	@Override
 	public boolean verificarAlbumCompleto() {
-	
+		boolean mejoresJugadoresCompleto = true;
+		
+		for (String mundial: mundiales) {
+			mejoresJugadoresCompleto = mejoresJugadoresCompleto &&
+					seccionMejoresJugadores.get(mundial).size() == 2;
+		}
+		
+		return mejoresJugadoresCompleto && super.verificarAlbumCompleto();
 	}
 	
 	private void generarSeccionMejoresJugadores(String[] listadoDeMundiales) {
