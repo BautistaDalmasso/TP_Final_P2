@@ -12,6 +12,6 @@ public class AlbumTradicional extends Album {
 	}
 
 	public int verNumeroParaSorteo() {
-	
+		return numeroParaSorteo;
 	}
 }

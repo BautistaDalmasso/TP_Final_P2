@@ -57,4 +57,14 @@ public class Participante {
 		AlbumWeb album = (AlbumWeb) this.album;
 		return album.verCodigoPromocional();
 	}
+
+	public int verNumeroParaSorteo() {
+		if (!tipoDeAlbum.equals("Tradicional")) {
+			throw new RuntimeException("Necesita un album tradicional.");
+		}
+		
+		AlbumTradicional album = (AlbumTradicional) this.album;
+		
+		return album.verNumeroParaSorteo();
+	}
 }

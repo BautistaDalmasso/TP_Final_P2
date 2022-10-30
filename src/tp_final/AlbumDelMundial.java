@@ -11,12 +11,14 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	private Fabrica fabrica;
 	
 	private List<Integer> codigosPromocionalesRedimidos;
+	private List<Integer> sorteosRedimidos;
 	
 	public AlbumDelMundial() {
 		coleccionistasParticipantes = new HashMap<Integer, Participante>();
 		fabrica = new Fabrica();
 		
 		codigosPromocionalesRedimidos = new LinkedList<Integer>();
+		sorteosRedimidos = new LinkedList<Integer>();
 	}
 
 	public int registrarParticipante(int dni, String nombre, String tipoDeAlbum) {
@@ -104,7 +106,19 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	}
 	
 	public String aplicarSorteoInstantaneo(int dni) {
-	
+		asegurarRegistro(dni);
+		Participante comprador = coleccionistasParticipantes.get(dni);
+		
+		if (!comprador.verTipoDeAlbum().equals("Tradicional")) {
+			throw new RuntimeException("Necesita un album tradicional.");
+		}
+		int numSorteo = comprador.verNumeroParaSorteo();
+		if (sorteosRedimidos.contains(numSorteo)) {
+			throw new RuntimeException("Numero ya redimido.");
+		}
+		
+		sorteosRedimidos.add(numSorteo);
+		return fabrica.sortear();
 	}
 	
 	public int buscarFiguritaRepetida(int dni) {

@@ -127,6 +127,12 @@ public class Fabrica {
 		return new Pais(nombrePais, ranking.get(nombrePais));
 	}
 	
+	public String sortear() {
+		int indicePremio = random.nextInt(premiosInstantaneos.length);
+		
+		return premiosInstantaneos[indicePremio];
+	}
+	
 	///////////////////////////////////////////////////////
 	///////////// METODOS FACILITADOS POR LA CATEDRA //////
 	///////////////////////////////////////////////////////
