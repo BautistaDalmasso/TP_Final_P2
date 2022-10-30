@@ -79,4 +79,8 @@ public class Participante {
 		
 		return album.verNumeroParaSorteo();
 	}
+	
+	public String toString() {
+		return " - (" + dni + ") " + nombreDeUsuario + ": " + album.getPremio();
+	}
 }

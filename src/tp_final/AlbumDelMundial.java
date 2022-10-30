@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class AlbumDelMundial implements IAlbumDelMundial {
 	private Map<Integer, Participante> coleccionistasParticipantes;
+	private List<Participante> listaParticipantes;
 	private Fabrica fabrica;
 	
 	private List<Integer> codigosPromocionalesRedimidos;
@@ -15,6 +16,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	
 	public AlbumDelMundial() {
 		coleccionistasParticipantes = new HashMap<Integer, Participante>();
+		listaParticipantes = new LinkedList<Participante>();
 		fabrica = new Fabrica();
 		
 		codigosPromocionalesRedimidos = new LinkedList<Integer>();
@@ -30,6 +32,8 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		
 		Participante nuevoParticipante = new Participante(dni, nombre, tipoDeAlbum, albumSeleccionado);
 		coleccionistasParticipantes.put(dni, nuevoParticipante);
+		listaParticipantes.add(nuevoParticipante);
+		
 		
 		return nuevoParticipante.verCodigoAlbum();
 	}
@@ -143,7 +147,15 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	}
 	
 	public String listadoDeGanadores() {
-	
+		StringBuilder resultado = new StringBuilder();
+		
+		for (Participante p : listaParticipantes) {
+			if (p.verificarAlbumCompleto()) {
+				resultado.append(p.toString());
+			}
+		}
+		
+		return resultado.toString();
 	}
 	
 	public List<String> participantesQueCompletaronElPais(String nombrePais) {

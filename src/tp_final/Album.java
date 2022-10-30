@@ -88,4 +88,9 @@ public abstract class Album {
 	private static void aumentarCantidadDeAlbumes() {
 		Album.cantidadDeAlbumes++;
 	}
+
+
+	public String getPremio() {
+		return premios;
+	}
 }
