@@ -11,6 +11,7 @@ public abstract class Album {
 	
 	private int codigoUnico;
 	private Map<String, ArrayList<Figurita>> seccionPaisesParticipantes;
+	private String[] paises;
 	private String premios;
 	
 	
@@ -19,6 +20,7 @@ public abstract class Album {
 		codigoUnico = Album.cantidadDeAlbumes;
 		Album.aumentarCantidadDeAlbumes();
 		
+		this.paises = paisesClasificados;
 		generarSeccionPaises(paisesClasificados);
 		
 		this.premios = premios;
@@ -56,11 +58,18 @@ public abstract class Album {
 	}
 	
 	public boolean verificarAlbumCompleto() {
-	
+		boolean estaCompleto = true;
+		
+		for (String pais: paises) {
+			estaCompleto = estaCompleto &&
+					seccionPaisesParticipantes.get(pais).size() == 12;
+		}
+		
+		return estaCompleto;
 	}
 	
 	public boolean verificarArgentinaCompleto() {
-	
+		return seccionPaisesParticipantes.get("Argentina").size() == 12;
 	}
 	
 	public int getCodigoUnico() {
