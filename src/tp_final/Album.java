@@ -10,7 +10,7 @@ public abstract class Album {
 	private static int cantidadDeAlbumes;
 	
 	private int codigoUnico;
-	private Map<String, ArrayList<Figurita>> seccionPaisesParticipantes;
+	private Map<String, ArrayList<FiguritaTradicional>> seccionPaisesParticipantes;
 	private String[] paises;
 	private String premios;
 	
@@ -27,17 +27,17 @@ public abstract class Album {
 	}
 
 	
-	public boolean figuritaEstaPegada(Figurita figurita) {
-		ArrayList<Figurita> pagina = 
+	public boolean figuritaEstaPegada(FiguritaTradicional figurita) {
+		ArrayList<FiguritaTradicional> pagina = 
 				seccionPaisesParticipantes.get(figurita.getNombrePais());
 		
 		return pagina.contains(figurita);
 	}
 	
-	public List<String> pegarFiguritas(List<Figurita> figuritas) {
+	public List<String> pegarFiguritas(List<FiguritaTradicional> figuritas) {
 		LinkedList<String> resultado = new LinkedList<String>();
 		
-		for (Figurita f: figuritas) {
+		for (FiguritaTradicional f: figuritas) {
 			pegarFigurita(f);
 			
 			resultado.add(f.toString());
@@ -46,13 +46,13 @@ public abstract class Album {
 		return resultado;
 	}
 	
-	public void pegarFigurita(Figurita figurita) {
+	public void pegarFigurita(FiguritaTradicional figurita) {
 		if (figuritaEstaPegada(figurita)) {
 			throw new RuntimeException("Tratando de pegar figurita repetida.");
 		}
 		
 		String nombrePais = figurita.getNombrePais();
-		ArrayList<Figurita> pagina = seccionPaisesParticipantes.get(nombrePais);
+		ArrayList<FiguritaTradicional> pagina = seccionPaisesParticipantes.get(nombrePais);
 		
 		pagina.add(figurita);
 	}
@@ -78,10 +78,10 @@ public abstract class Album {
 	
 	
 	private void generarSeccionPaises(String[] paisesClasificados) {
-		seccionPaisesParticipantes = new HashMap<String, ArrayList<Figurita>>();
+		seccionPaisesParticipantes = new HashMap<String, ArrayList<FiguritaTradicional>>();
 		
 		for (String nombrePais : paisesClasificados) {
-			seccionPaisesParticipantes.put(nombrePais, new ArrayList<Figurita>());
+			seccionPaisesParticipantes.put(nombrePais, new ArrayList<FiguritaTradicional>());
 		}
 	}
 	

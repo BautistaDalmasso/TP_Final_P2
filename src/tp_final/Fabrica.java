@@ -52,8 +52,8 @@ public class Fabrica {
 		return new AlbumTradicional(paisesParticipantes);
 	}
 
-	List<Figurita> generarSobre(int cantFigus) {
-		LinkedList<Figurita> sobre = new LinkedList<Figurita>();
+	List<FiguritaTradicional> generarSobre(int cantFigus) {
+		LinkedList<FiguritaTradicional> sobre = new LinkedList<FiguritaTradicional>();
 		
 		for (int i = 0; i < 4; i++) {
 			sobre.add(generarFigurita());
@@ -83,8 +83,8 @@ public class Fabrica {
 		return resultado;
 	}
 	
-	List<Figurita> generarSobreTop10(int cantFigus) {
-		LinkedList<Figurita> sobre = new LinkedList<Figurita>();
+	List<FiguritaTradicional> generarSobreTop10(int cantFigus) {
+		LinkedList<FiguritaTradicional> sobre = new LinkedList<FiguritaTradicional>();
 		
 		for (int i = 0; i < 4; i++) {
 			sobre.add(generarFiguritaTop10());

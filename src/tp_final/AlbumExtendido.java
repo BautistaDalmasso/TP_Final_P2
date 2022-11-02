@@ -20,7 +20,7 @@ public class AlbumExtendido extends Album {
 	}
 
 	@Override
-	public boolean figuritaEstaPegada(Figurita figurita) {
+	public boolean figuritaEstaPegada(FiguritaTradicional figurita) {
 		if (figurita instanceof FiguritaTOP10) {
 			ArrayList<FiguritaTOP10> pagina =
 					seccionMejoresJugadores.get(figurita.getNombrePais());
@@ -31,10 +31,10 @@ public class AlbumExtendido extends Album {
 	}
 	
 	@Override
-	public List<String> pegarFiguritas(List<Figurita> figuritas) {
+	public List<String> pegarFiguritas(List<FiguritaTradicional> figuritas) {
 		LinkedList<String> resultado = new LinkedList<String>();
 		
-		for (Figurita f: figuritas) {			
+		for (FiguritaTradicional f: figuritas) {			
 			if (f instanceof FiguritaTOP10) {
 				pegarFiguritaTop10(f);
 				resultado.add(f.toString());
@@ -48,7 +48,7 @@ public class AlbumExtendido extends Album {
 		return resultado;
 	}
 	
-	private void pegarFiguritaTop10(Figurita f) {
+	private void pegarFiguritaTop10(FiguritaTradicional f) {
 		ArrayList<FiguritaTOP10> pagina = 
 				seccionMejoresJugadores.get(f.getNombrePais());
 		
