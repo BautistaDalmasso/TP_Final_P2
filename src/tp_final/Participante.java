@@ -8,17 +8,15 @@ public class Participante {
 	private String nombreDeUsuario;
 	private List<Figurita> coleccionDeFiguritas;
 	private List<Figurita> figuritasRepetidas;
-	private String tipoDeAlbum;
 	private Album album;
 
 	
-	public Participante(int dni, String nombreDeUsuario, String tipoDeAlbum, Album album) {
+	public Participante(int dni, String nombreDeUsuario, Album album) {
 		this.coleccionDeFiguritas = new LinkedList<Figurita>();
 		this.figuritasRepetidas = new LinkedList<Figurita>();
 		
 		this.dni = dni;
 		this.nombreDeUsuario = nombreDeUsuario;
-		this.tipoDeAlbum = tipoDeAlbum;
 		this.album = album;
 	}
 
@@ -72,25 +70,13 @@ public class Participante {
 		return album.getCodigoUnico();
 	}
 
-	public String verTipoDeAlbum() {
-		return tipoDeAlbum;
-	}
-
 	public int verCodigoPromocional() {
-		if (!tipoDeAlbum.equals("Web")) {
-			throw new RuntimeException("Solo albumes web tienen codigo promocional.");
-		}
 		AlbumWeb album = (AlbumWeb) this.album;
 		return album.verCodigoPromocional();
 	}
 
 	public int verNumeroParaSorteo() {
-		if (!tipoDeAlbum.equals("Tradicional")) {
-			throw new RuntimeException("Necesita un album tradicional.");
-		}
-		
 		AlbumTradicional album = (AlbumTradicional) this.album;
-		
 		return album.verNumeroParaSorteo();
 	}
 	
@@ -99,6 +85,9 @@ public class Participante {
 	}
 	
 	public String toStringInformativo() {
+		String tipoDeAlbum =
+				album instanceof AlbumTradicional ? "Tradicional" :
+					(album instanceof AlbumWeb ? "Web" : "Extendido");
 		return toString() + ": " + tipoDeAlbum;
 	}
 	
@@ -124,5 +113,9 @@ public class Participante {
 			return -1;
 		}
 		return figuritasRepetidas.get(0).getNumeroIdentificador();
+	}
+
+	public Album getAlbum() {
+		return album;
 	}
 }

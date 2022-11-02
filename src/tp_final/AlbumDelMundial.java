@@ -29,7 +29,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		
 		Album albumSeleccionado = generarAlbum(tipoDeAlbum);
 		
-		Participante nuevoParticipante = new Participante(dni, nombre, tipoDeAlbum, albumSeleccionado);
+		Participante nuevoParticipante = new Participante(dni, nombre, albumSeleccionado);
 		coleccionistasParticipantes.put(dni, nuevoParticipante);
 		listaParticipantes.add(nuevoParticipante);
 		
@@ -66,7 +66,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 		Participante comprador = coleccionistasParticipantes.get(dni);
 		
-		if (!comprador.verTipoDeAlbum().equals("Extendido")) {
+		if (!(comprador.getAlbum() instanceof AlbumExtendido)) {
 			throw new RuntimeException("Comprador debe tener un album extendido.");
 		}
 		
@@ -79,7 +79,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		
 		Participante comprador = coleccionistasParticipantes.get(dni);
 		
-		if (!comprador.verTipoDeAlbum().equals("Web")) {
+		if (!(comprador.getAlbum() instanceof AlbumWeb)) {
 			throw new RuntimeException("Comprador debe tener un album web.");
 		}
 		int codigoPromocional = comprador.verCodigoPromocional();
@@ -113,7 +113,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		asegurarRegistro(dni);
 		Participante comprador = coleccionistasParticipantes.get(dni);
 		
-		if (!comprador.verTipoDeAlbum().equals("Tradicional")) {
+		if (!(comprador.getAlbum() instanceof AlbumTradicional)) {
 			throw new RuntimeException("Necesita un album tradicional.");
 		}
 		int numSorteo = comprador.verNumeroParaSorteo();
