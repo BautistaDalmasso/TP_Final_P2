@@ -137,7 +137,30 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	}
 	
 	public boolean intercambiarUnaFiguritaRepetida(int dni) {
-	
+		asegurarRegistro(dni);
+		Participante a = coleccionistasParticipantes.get(dni);
+		Participante b = buscarAlbumDelMismoTipo(a);
+		
+		// Si no hay ningun participante con el cual intercambiar devolvemos false.
+		if (b == null) {
+			return false;
+		}
+		return intercambiarUnaFiguritaRepetida(a, b);
+	}
+	private boolean intercambiarUnaFiguritaRepetida(Participante a, Participante b) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private Participante buscarAlbumDelMismoTipo(Participante otro) {
+		// Busca un participante distinto de otro con el mismo tipo de Album.		
+		for (Participante p : listaParticipantes) {
+			if (p.getAlbum().getClass().equals(otro.getAlbum().getClass())
+					&& (!p.equals(otro))) {
+				return p;
+			}
+		}
+		return null;
 	}
 	
 	public String darNombre(int dni) {
