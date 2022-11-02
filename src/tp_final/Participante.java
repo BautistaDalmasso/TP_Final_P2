@@ -88,6 +88,18 @@ public class Participante {
 		return res;
 	}
 	
+	public Figurita devolverFiguritaRepetida(int codigoFigurita) {
+		// Popea un figurita repetida con el código indicado.
+		for (Figurita f : figuritasRepetidas) {
+			if (f.getNumeroIdentificador() == codigoFigurita) {
+				Figurita resultado = f;
+				figuritasRepetidas.remove(f);
+				return resultado;
+			}
+		}
+		return null;
+	}
+	
 	public boolean aceptaFigurita(Figurita f) {
 		// Devuelve true si el participante no tiene la figurita repetida 
 		// para evitar que intercambie una repetida por otra también repetida.

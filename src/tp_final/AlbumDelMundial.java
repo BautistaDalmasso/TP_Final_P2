@@ -133,47 +133,61 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	}
 	
 	public boolean intercambiar(int dni, int codigoFigurita) {
-	
+		asegurarRegistro(dni);
+		Participante intercambiador = coleccionistasParticipantes.get(dni);
+		
+		Figurita f = intercambiador.devolverFiguritaRepetida(codigoFigurita);
+		if (f == null) {
+			throw new RuntimeException("Figurita invalida para intercambio.");
+		}
+		
+		return intercambiarUnaFiguritaRepetida(intercambiador, f);
 	}
 	
 	public boolean intercambiarUnaFiguritaRepetida(int dni) {
 		asegurarRegistro(dni);
-		Participante a = coleccionistasParticipantes.get(dni);
-		Participante b = buscarAlbumDelMismoTipo(a);
+		Participante intercambiador = coleccionistasParticipantes.get(dni);
+		
+		Figurita figuIntercambiador = intercambiador.devolverFiguritaRepetida();
+		
+		return intercambiarUnaFiguritaRepetida(intercambiador,figuIntercambiador);
+	}
+	private boolean intercambiarUnaFiguritaRepetida(Participante intercambiador,
+			Figurita figuIntercambiador)
+	{	
+		Participante companieroDeIntercambio = buscarAlbumDelMismoTipo(intercambiador);
 		
 		// Si no hay ningun participante con el cual intercambiar devolvemos false.
-		if (b == null) {
+		if (companieroDeIntercambio == null) {
 			return false;
 		}
-		return intercambiarUnaFiguritaRepetida(a, b);
-	}
-	private boolean intercambiarUnaFiguritaRepetida(Participante a, Participante b) {
-		Figurita figuA = a.devolverFiguritaRepetida();
 		
 		// El participante que pidió el intercambio no tenía figuritas para
 		// intercambiar.
-		if (figuA == null) {
+		if (figuIntercambiador == null) {
 			return true;
 		}
 		
-		Figurita figuB = b.devolverFiguritaIntercambiable(figuA.calcularPrecio());
+		Figurita figuCompaniero = companieroDeIntercambio
+				.devolverFiguritaIntercambiable(figuIntercambiador.calcularPrecio());
 		
 		// El participante que pidió el intercambio tenía figuritas pero el
 		// otro no.
-		if (figuB == null) {
-			a.agregarFigurita(figuA);
+		if (figuCompaniero == null) {
+			intercambiador.agregarFigurita(figuIntercambiador);
 			
 			return false;
 		}
 		// Ambos participantes aceptan la figurita sugerida por el otro.
-		if (a.aceptaFigurita(figuB) && b.aceptaFigurita(figuA)) {
-			a.agregarFigurita(figuB);
-			b.agregarFigurita(figuA);
+		if (intercambiador.aceptaFigurita(figuCompaniero) 
+				&& companieroDeIntercambio.aceptaFigurita(figuIntercambiador)) {
+			intercambiador.agregarFigurita(figuCompaniero);
+			companieroDeIntercambio.agregarFigurita(figuIntercambiador);
 			return true;
 		}
 		// Alguno de los participantes no acepto la figurita.
-		a.agregarFigurita(figuA);
-		b.agregarFigurita(figuB);
+		intercambiador.agregarFigurita(figuIntercambiador);
+		companieroDeIntercambio.agregarFigurita(figuCompaniero);
 		return false;
 	}
 
