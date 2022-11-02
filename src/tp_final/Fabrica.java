@@ -52,8 +52,8 @@ public class Fabrica {
 		return new AlbumTradicional(paisesParticipantes);
 	}
 
-	List<Figurita> generarSobre(int cantFigus) {
-		LinkedList<Figurita> sobre = new LinkedList<Figurita>();
+	List<FiguritaTradicional> generarSobre(int cantFigus) {
+		LinkedList<FiguritaTradicional> sobre = new LinkedList<FiguritaTradicional>();
 		
 		for (int i = 0; i < 4; i++) {
 			sobre.add(generarFigurita());
@@ -70,7 +70,7 @@ public class Fabrica {
 		String nombrePais = paisesParticipantes[indicePais];
 		Pais paisJugador = generarPais(nombrePais);
 		// Crea un jugador aleatorio.
-		int numeroJugador = random.nextInt(1, 12+1);  // Numeros de jugador van del 1 al 12.
+		int numeroJugador = random.nextInt(1, lugaresPorPais+1);  // Numeros de jugador van del 1 al 12.
 		String nombreJugador = "Jugador " + numeroJugador;
 		
 		FiguritaTradicional resultado = new FiguritaTradicional(
@@ -83,8 +83,8 @@ public class Fabrica {
 		return resultado;
 	}
 	
-	List<Figurita> generarSobreTop10(int cantFigus) {
-		LinkedList<Figurita> sobre = new LinkedList<Figurita>();
+	List<FiguritaTradicional> generarSobreTop10(int cantFigus) {
+		LinkedList<FiguritaTradicional> sobre = new LinkedList<FiguritaTradicional>();
 		
 		for (int i = 0; i < 4; i++) {
 			sobre.add(generarFiguritaTop10());
@@ -108,15 +108,14 @@ public class Fabrica {
 		String nombrePais = balonYPaisPorMundialTop10.get(mundial)[numeroDeBalon];
 		Pais paisJugador = generarPais(nombrePais);
 
-		// Crea un jugador aleatorio.
-		int numeroJugador = random.nextInt(1, 12+1);  // Numeros de jugador van del 1 al 12.
-		String nombreJugador = "Jugador " + numeroJugador;
+		// Crea un jugador.
+		String nombreJugador = "Jugador " + numeroDeBalon;
 		
 		FiguritaTOP10 resultado = new FiguritaTOP10(
 				paisJugador,
-				calcularValorBase(nombrePais, numeroJugador),
+				calcularValorBase(nombrePais, numeroDeBalon),
 				nombreJugador,
-				numeroJugador,
+				numeroDeBalon,
 				mundial,
 				balon
 		);

@@ -6,27 +6,27 @@ import java.util.List;
 public class Participante {
 	private int dni;
 	private String nombreDeUsuario;
-	private List<Figurita> coleccionDeFiguritas;
-	private List<Figurita> figuritasRepetidas;
+	private List<FiguritaTradicional> coleccionDeFiguritas;
+	private List<FiguritaTradicional> figuritasRepetidas;
 	private Album album;
 
 	
 	public Participante(int dni, String nombreDeUsuario, Album album) {
-		this.coleccionDeFiguritas = new LinkedList<Figurita>();
-		this.figuritasRepetidas = new LinkedList<Figurita>();
+		this.coleccionDeFiguritas = new LinkedList<FiguritaTradicional>();
+		this.figuritasRepetidas = new LinkedList<FiguritaTradicional>();
 		
 		this.dni = dni;
 		this.nombreDeUsuario = nombreDeUsuario;
 		this.album = album;
 	}
 
-	public void agregarFiguritasAColeccion(List<Figurita> figuritas) {
-		for (Figurita f : figuritas) {
+	public void agregarFiguritasAColeccion(List<FiguritaTradicional> figuritas) {
+		for (FiguritaTradicional f : figuritas) {
 			agregarFigurita(f);
 		}
 	}
 	
-	public void agregarFigurita(Figurita f) {
+	public void agregarFigurita(FiguritaTradicional f) {
 		if (figuritaRepetida(f)) {
 			figuritasRepetidas.add(f);
 		} else {
@@ -38,7 +38,7 @@ public class Participante {
 		List<String> resultado = album.pegarFiguritas(coleccionDeFiguritas);
 		
 		// Vacia las figuritas una vez que fueron pegadas.
-		coleccionDeFiguritas = new LinkedList<Figurita>();
+		coleccionDeFiguritas = new LinkedList<FiguritaTradicional>();
 		
 		return resultado;
 	}
@@ -51,12 +51,12 @@ public class Participante {
 		return album.verificarArgentinaCompleto();
 	}
 	
-	public Figurita devolverFiguritaIntercambiable(double valorFigurita) {
+	public FiguritaTradicional devolverFiguritaIntercambiable(double valorFigurita) {
 		/* Trata de devolver (popeando) una figurita repetida de mayor valor posible,
 		manteniendose en un valor <= a valorFigurita. */
-		Figurita resultado = null;
+		FiguritaTradicional resultado = null;
 		
-		for (Figurita f : figuritasRepetidas) {
+		for (FiguritaTradicional f : figuritasRepetidas) {
 			if (f.calcularPrecio() <= valorFigurita) {
 				if (resultado == null ||
 						resultado.calcularPrecio() < f.calcularPrecio()) 
@@ -78,21 +78,21 @@ public class Participante {
 		return figuritasRepetidas.get(0).getNumeroIdentificador();
 	}
 
-	public Figurita devolverFiguritaRepetida() {
+	public FiguritaTradicional devolverFiguritaRepetida() {
 		// Popea una figurita repetida.
 		if (figuritasRepetidas.isEmpty()) {
 			return null;
 		}
-		Figurita res = figuritasRepetidas.get(0);
+		FiguritaTradicional res = figuritasRepetidas.get(0);
 		figuritasRepetidas.remove(0);
 		return res;
 	}
 	
-	public Figurita devolverFiguritaRepetida(int codigoFigurita) {
+	public FiguritaTradicional devolverFiguritaRepetida(int codigoFigurita) {
 		// Popea un figurita repetida con el código indicado.
-		for (Figurita f : figuritasRepetidas) {
+		for (FiguritaTradicional f : figuritasRepetidas) {
 			if (f.getNumeroIdentificador() == codigoFigurita) {
-				Figurita resultado = f;
+				FiguritaTradicional resultado = f;
 				figuritasRepetidas.remove(f);
 				return resultado;
 			}
@@ -100,13 +100,13 @@ public class Participante {
 		return null;
 	}
 	
-	public boolean aceptaFigurita(Figurita f) {
+	public boolean aceptaFigurita(FiguritaTradicional f) {
 		// Devuelve true si el participante no tiene la figurita repetida 
 		// para evitar que intercambie una repetida por otra también repetida.
 		return !figuritaRepetida(f);
 	}
 	
-	private boolean figuritaRepetida(Figurita f) {
+	private boolean figuritaRepetida(FiguritaTradicional f) {
 		return coleccionDeFiguritas.contains(f) ||
 				album.figuritaEstaPegada(f);
 	}

@@ -57,7 +57,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 		Participante comprador = coleccionistasParticipantes.get(dni);
 
-		List<Figurita> sobre = fabrica.generarSobre(4);
+		List<FiguritaTradicional> sobre = fabrica.generarSobre(4);
 		comprador.agregarFiguritasAColeccion(sobre);
 	}
 
@@ -70,7 +70,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			throw new RuntimeException("Comprador debe tener un album extendido.");
 		}
 		
-		List<Figurita> sobre = fabrica.generarSobreTop10(4);
+		List<FiguritaTradicional> sobre = fabrica.generarSobreTop10(4);
 		comprador.agregarFiguritasAColeccion(sobre);
 	}
 	
@@ -87,7 +87,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			throw new RuntimeException("Código ya redimido");
 		}
 		
-		List<Figurita> sobre = fabrica.generarSobre(4);
+		List<FiguritaTradicional> sobre = fabrica.generarSobre(4);
 		comprador.agregarFiguritasAColeccion(sobre);
 		
 		codigosPromocionalesRedimidos.add(codigoPromocional);
@@ -136,7 +136,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		asegurarRegistro(dni);
 		Participante intercambiador = coleccionistasParticipantes.get(dni);
 		
-		Figurita f = intercambiador.devolverFiguritaRepetida(codigoFigurita);
+		FiguritaTradicional f = intercambiador.devolverFiguritaRepetida(codigoFigurita);
 		if (f == null) {
 			throw new RuntimeException("Figurita invalida para intercambio.");
 		}
@@ -148,12 +148,12 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		asegurarRegistro(dni);
 		Participante intercambiador = coleccionistasParticipantes.get(dni);
 		
-		Figurita figuIntercambiador = intercambiador.devolverFiguritaRepetida();
+		FiguritaTradicional figuIntercambiador = intercambiador.devolverFiguritaRepetida();
 		
 		return intercambiarUnaFiguritaRepetida(intercambiador,figuIntercambiador);
 	}
 	private boolean intercambiarUnaFiguritaRepetida(Participante intercambiador,
-			Figurita figuIntercambiador)
+			FiguritaTradicional figuIntercambiador)
 	{	
 		Participante companieroDeIntercambio = buscarAlbumDelMismoTipo(intercambiador);
 		
@@ -168,7 +168,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			return true;
 		}
 		
-		Figurita figuCompaniero = companieroDeIntercambio
+		FiguritaTradicional figuCompaniero = companieroDeIntercambio
 				.devolverFiguritaIntercambiable(figuIntercambiador.calcularPrecio());
 		
 		// El participante que pidió el intercambio tenía figuritas pero el

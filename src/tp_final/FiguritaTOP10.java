@@ -2,7 +2,7 @@ package tp_final;
 
 import java.util.Objects;
 
-public class FiguritaTOP10 extends Figurita {
+public class FiguritaTOP10 extends FiguritaTradicional {
 	private String mundial;
 	private String balonGanado;
 	

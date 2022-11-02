@@ -22,12 +22,12 @@ public class CodigoCliente {
 		sistema.comprarFiguritas(222222);
 		sistema.comprarFiguritas(333333);
 		
-		// El participante 333333 tiene un album tradicional y por eso puede 
+		// El participante 222222 tiene un album tradicional y por eso puede 
 		// participar en un sortepo por un premio instantaneo.
 		System.out.println(
-				sistema.darNombre(333333) + 
+				sistema.darNombre(222222) + 
 				" recibio por sorteo instantaneo: " + 
-				sistema.aplicarSorteoInstantaneo(333333)
+				sistema.aplicarSorteoInstantaneo(222222)
 			);
 		System.out.println();
 		
