@@ -22,12 +22,16 @@ public class Participante {
 
 	public void agregarFiguritasAColeccion(List<Figurita> figuritas) {
 		for (Figurita f : figuritas) {
-			if (coleccionDeFiguritas.contains(f) ||
-					album.figuritaEstaPegada(f)) {
-				figuritasRepetidas.add(f);
-			} else {
-				coleccionDeFiguritas.add(f);
-			}
+			agregarFigurita(f);
+		}
+	}
+	
+	public void agregarFigurita(Figurita f) {
+		if (coleccionDeFiguritas.contains(f) ||
+				album.figuritaEstaPegada(f)) {
+			figuritasRepetidas.add(f);
+		} else {
+			coleccionDeFiguritas.add(f);
 		}
 	}
 	
@@ -48,8 +52,8 @@ public class Participante {
 		return album.verificarArgentinaCompleto();
 	}
 	
-	public Figurita buscarFiguritaIntercambiable(double valorFigurita) {
-		/* Trata de devolver una figurita repetida de mayor valor posible,
+	public Figurita devolverFiguritaIntercambiable(double valorFigurita) {
+		/* Trata de devolver (popeando) una figurita repetida de mayor valor posible,
 		manteniendose en un valor <= a valorFigurita. */
 		Figurita resultado = null;
 		
@@ -63,7 +67,26 @@ public class Participante {
 			}
 		}
 		
+		figuritasRepetidas.remove(resultado);
 		return resultado;
+	}
+	
+	public int buscarFiguritaRepetida() {
+		// Devuelve el código identificador de una figurita repetida.
+		if (figuritasRepetidas.isEmpty()) {
+			return -1;
+		}
+		return figuritasRepetidas.get(0).getNumeroIdentificador();
+	}
+
+	public Figurita devolverFiguritaRepetida() {
+		// Popea una figurita repetida.
+		if (figuritasRepetidas.isEmpty()) {
+			return null;
+		}
+		Figurita res = figuritasRepetidas.get(0);
+		figuritasRepetidas.remove(0);
+		return res;
 	}
 	
 	public int verCodigoAlbum() {
@@ -107,15 +130,9 @@ public class Participante {
 	public String verPremio() {
 		return album.getPremio();
 	}
-
-	public int buscarFiguritaRepetida() {
-		if (figuritasRepetidas.isEmpty()) {
-			return -1;
-		}
-		return figuritasRepetidas.get(0).getNumeroIdentificador();
-	}
-
+	
 	public Album getAlbum() {
 		return album;
 	}
+
 }
