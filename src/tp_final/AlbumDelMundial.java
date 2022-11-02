@@ -148,7 +148,32 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		return intercambiarUnaFiguritaRepetida(a, b);
 	}
 	private boolean intercambiarUnaFiguritaRepetida(Participante a, Participante b) {
-		// TODO Auto-generated method stub
+		Figurita figuA = a.devolverFiguritaRepetida();
+		
+		// El participante que pidió el intercambio no tenía figuritas para
+		// intercambiar.
+		if (figuA == null) {
+			return true;
+		}
+		
+		Figurita figuB = b.devolverFiguritaIntercambiable(figuA.calcularPrecio());
+		
+		// El participante que pidió el intercambio tenía figuritas pero el
+		// otro no.
+		if (figuB == null) {
+			a.agregarFigurita(figuA);
+			
+			return false;
+		}
+		// Ambos participantes aceptan la figurita sugerida por el otro.
+		if (a.aceptaFigurita(figuB) && b.aceptaFigurita(figuA)) {
+			a.agregarFigurita(figuB);
+			b.agregarFigurita(figuA);
+			return true;
+		}
+		// Alguno de los participantes no acepto la figurita.
+		a.agregarFigurita(figuA);
+		b.agregarFigurita(figuB);
 		return false;
 	}
 

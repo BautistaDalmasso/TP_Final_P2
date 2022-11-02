@@ -27,8 +27,7 @@ public class Participante {
 	}
 	
 	public void agregarFigurita(Figurita f) {
-		if (coleccionDeFiguritas.contains(f) ||
-				album.figuritaEstaPegada(f)) {
+		if (figuritaRepetida(f)) {
 			figuritasRepetidas.add(f);
 		} else {
 			coleccionDeFiguritas.add(f);
@@ -89,6 +88,17 @@ public class Participante {
 		return res;
 	}
 	
+	public boolean aceptaFigurita(Figurita f) {
+		// Devuelve true si el participante no tiene la figurita repetida 
+		// para evitar que intercambie una repetida por otra también repetida.
+		return !figuritaRepetida(f);
+	}
+	
+	private boolean figuritaRepetida(Figurita f) {
+		return coleccionDeFiguritas.contains(f) ||
+				album.figuritaEstaPegada(f);
+	}
+
 	public int verCodigoAlbum() {
 		return album.getCodigoUnico();
 	}
@@ -134,5 +144,4 @@ public class Participante {
 	public Album getAlbum() {
 		return album;
 	}
-
 }
