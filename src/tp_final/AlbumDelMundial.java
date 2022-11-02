@@ -1,6 +1,5 @@
 package tp_final;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,7 +29,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		
 		Album albumSeleccionado = generarAlbum(tipoDeAlbum);
 		
-		Participante nuevoParticipante = new Participante(dni, nombre, tipoDeAlbum, albumSeleccionado);
+		Participante nuevoParticipante = new Participante(dni, nombre, albumSeleccionado);
 		coleccionistasParticipantes.put(dni, nuevoParticipante);
 		listaParticipantes.add(nuevoParticipante);
 		
@@ -67,7 +66,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 		Participante comprador = coleccionistasParticipantes.get(dni);
 		
-		if (!comprador.verTipoDeAlbum().equals("Extendido")) {
+		if (!(comprador.getAlbum() instanceof AlbumExtendido)) {
 			throw new RuntimeException("Comprador debe tener un album extendido.");
 		}
 		
@@ -80,7 +79,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		
 		Participante comprador = coleccionistasParticipantes.get(dni);
 		
-		if (!comprador.verTipoDeAlbum().equals("Web")) {
+		if (!(comprador.getAlbum() instanceof AlbumWeb)) {
 			throw new RuntimeException("Comprador debe tener un album web.");
 		}
 		int codigoPromocional = comprador.verCodigoPromocional();
@@ -114,7 +113,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		asegurarRegistro(dni);
 		Participante comprador = coleccionistasParticipantes.get(dni);
 		
-		if (!comprador.verTipoDeAlbum().equals("Tradicional")) {
+		if (!(comprador.getAlbum() instanceof AlbumTradicional)) {
 			throw new RuntimeException("Necesita un album tradicional.");
 		}
 		int numSorteo = comprador.verNumeroParaSorteo();
@@ -127,15 +126,80 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	}
 	
 	public int buscarFiguritaRepetida(int dni) {
-	
+		asegurarRegistro(dni);
+		
+		Participante p = coleccionistasParticipantes.get(dni);
+		return p.buscarFiguritaRepetida();
 	}
 	
 	public boolean intercambiar(int dni, int codigoFigurita) {
-	
+		asegurarRegistro(dni);
+		Participante intercambiador = coleccionistasParticipantes.get(dni);
+		
+		Figurita f = intercambiador.devolverFiguritaRepetida(codigoFigurita);
+		if (f == null) {
+			throw new RuntimeException("Figurita invalida para intercambio.");
+		}
+		
+		return intercambiarUnaFiguritaRepetida(intercambiador, f);
 	}
 	
 	public boolean intercambiarUnaFiguritaRepetida(int dni) {
-	
+		asegurarRegistro(dni);
+		Participante intercambiador = coleccionistasParticipantes.get(dni);
+		
+		Figurita figuIntercambiador = intercambiador.devolverFiguritaRepetida();
+		
+		return intercambiarUnaFiguritaRepetida(intercambiador,figuIntercambiador);
+	}
+	private boolean intercambiarUnaFiguritaRepetida(Participante intercambiador,
+			Figurita figuIntercambiador)
+	{	
+		Participante companieroDeIntercambio = buscarAlbumDelMismoTipo(intercambiador);
+		
+		// Si no hay ningun participante con el cual intercambiar devolvemos false.
+		if (companieroDeIntercambio == null) {
+			return false;
+		}
+		
+		// El participante que pidió el intercambio no tenía figuritas para
+		// intercambiar.
+		if (figuIntercambiador == null) {
+			return true;
+		}
+		
+		Figurita figuCompaniero = companieroDeIntercambio
+				.devolverFiguritaIntercambiable(figuIntercambiador.calcularPrecio());
+		
+		// El participante que pidió el intercambio tenía figuritas pero el
+		// otro no.
+		if (figuCompaniero == null) {
+			intercambiador.agregarFigurita(figuIntercambiador);
+			
+			return false;
+		}
+		// Ambos participantes aceptan la figurita sugerida por el otro.
+		if (intercambiador.aceptaFigurita(figuCompaniero) 
+				&& companieroDeIntercambio.aceptaFigurita(figuIntercambiador)) {
+			intercambiador.agregarFigurita(figuCompaniero);
+			companieroDeIntercambio.agregarFigurita(figuIntercambiador);
+			return true;
+		}
+		// Alguno de los participantes no acepto la figurita.
+		intercambiador.agregarFigurita(figuIntercambiador);
+		companieroDeIntercambio.agregarFigurita(figuCompaniero);
+		return false;
+	}
+
+	private Participante buscarAlbumDelMismoTipo(Participante otro) {
+		// Busca un participante distinto de otro con el mismo tipo de Album.		
+		for (Participante p : listaParticipantes) {
+			if (p.getAlbum().getClass().equals(otro.getAlbum().getClass())
+					&& (!p.equals(otro))) {
+				return p;
+			}
+		}
+		return null;
 	}
 	
 	public String darNombre(int dni) {

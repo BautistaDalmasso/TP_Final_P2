@@ -8,28 +8,29 @@ public class Participante {
 	private String nombreDeUsuario;
 	private List<Figurita> coleccionDeFiguritas;
 	private List<Figurita> figuritasRepetidas;
-	private String tipoDeAlbum;
 	private Album album;
 
 	
-	public Participante(int dni, String nombreDeUsuario, String tipoDeAlbum, Album album) {
+	public Participante(int dni, String nombreDeUsuario, Album album) {
 		this.coleccionDeFiguritas = new LinkedList<Figurita>();
 		this.figuritasRepetidas = new LinkedList<Figurita>();
 		
 		this.dni = dni;
 		this.nombreDeUsuario = nombreDeUsuario;
-		this.tipoDeAlbum = tipoDeAlbum;
 		this.album = album;
 	}
 
 	public void agregarFiguritasAColeccion(List<Figurita> figuritas) {
 		for (Figurita f : figuritas) {
-			if (coleccionDeFiguritas.contains(f) ||
-					album.figuritaEstaPegada(f)) {
-				figuritasRepetidas.add(f);
-			} else {
-				coleccionDeFiguritas.add(f);
-			}
+			agregarFigurita(f);
+		}
+	}
+	
+	public void agregarFigurita(Figurita f) {
+		if (figuritaRepetida(f)) {
+			figuritasRepetidas.add(f);
+		} else {
+			coleccionDeFiguritas.add(f);
 		}
 	}
 	
@@ -50,33 +51,77 @@ public class Participante {
 		return album.verificarArgentinaCompleto();
 	}
 	
-	public Figurita buscarFiguritaIntercambiable(double valorFigurita) {
-	
+	public Figurita devolverFiguritaIntercambiable(double valorFigurita) {
+		/* Trata de devolver (popeando) una figurita repetida de mayor valor posible,
+		manteniendose en un valor <= a valorFigurita. */
+		Figurita resultado = null;
+		
+		for (Figurita f : figuritasRepetidas) {
+			if (f.calcularPrecio() <= valorFigurita) {
+				if (resultado == null ||
+						resultado.calcularPrecio() < f.calcularPrecio()) 
+				{
+					resultado = f;
+				}
+			}
+		}
+		
+		figuritasRepetidas.remove(resultado);
+		return resultado;
 	}
 	
+	public int buscarFiguritaRepetida() {
+		// Devuelve el código identificador de una figurita repetida.
+		if (figuritasRepetidas.isEmpty()) {
+			return -1;
+		}
+		return figuritasRepetidas.get(0).getNumeroIdentificador();
+	}
+
+	public Figurita devolverFiguritaRepetida() {
+		// Popea una figurita repetida.
+		if (figuritasRepetidas.isEmpty()) {
+			return null;
+		}
+		Figurita res = figuritasRepetidas.get(0);
+		figuritasRepetidas.remove(0);
+		return res;
+	}
+	
+	public Figurita devolverFiguritaRepetida(int codigoFigurita) {
+		// Popea un figurita repetida con el código indicado.
+		for (Figurita f : figuritasRepetidas) {
+			if (f.getNumeroIdentificador() == codigoFigurita) {
+				Figurita resultado = f;
+				figuritasRepetidas.remove(f);
+				return resultado;
+			}
+		}
+		return null;
+	}
+	
+	public boolean aceptaFigurita(Figurita f) {
+		// Devuelve true si el participante no tiene la figurita repetida 
+		// para evitar que intercambie una repetida por otra también repetida.
+		return !figuritaRepetida(f);
+	}
+	
+	private boolean figuritaRepetida(Figurita f) {
+		return coleccionDeFiguritas.contains(f) ||
+				album.figuritaEstaPegada(f);
+	}
+
 	public int verCodigoAlbum() {
 		return album.getCodigoUnico();
 	}
 
-	public String verTipoDeAlbum() {
-		return tipoDeAlbum;
-	}
-
 	public int verCodigoPromocional() {
-		if (!tipoDeAlbum.equals("Web")) {
-			throw new RuntimeException("Solo albumes web tienen codigo promocional.");
-		}
 		AlbumWeb album = (AlbumWeb) this.album;
 		return album.verCodigoPromocional();
 	}
 
 	public int verNumeroParaSorteo() {
-		if (!tipoDeAlbum.equals("Tradicional")) {
-			throw new RuntimeException("Necesita un album tradicional.");
-		}
-		
 		AlbumTradicional album = (AlbumTradicional) this.album;
-		
 		return album.verNumeroParaSorteo();
 	}
 	
@@ -85,6 +130,9 @@ public class Participante {
 	}
 	
 	public String toStringInformativo() {
+		String tipoDeAlbum =
+				album instanceof AlbumTradicional ? "Tradicional" :
+					(album instanceof AlbumWeb ? "Web" : "Extendido");
 		return toString() + ": " + tipoDeAlbum;
 	}
 	
@@ -103,5 +151,9 @@ public class Participante {
 
 	public String verPremio() {
 		return album.getPremio();
+	}
+	
+	public Album getAlbum() {
+		return album;
 	}
 }
