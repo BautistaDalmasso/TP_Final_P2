@@ -260,12 +260,16 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	@Override
 	public String toString() {
 		StringBuilder res = new StringBuilder();
-		res.append("AlbumDelMundial [Participantes: ");
-		for (Participante p : listaParticipantes) {
-			res.append(p.toString());
-			res.append(";");
-		}
-		res.replace(res.length()-1,res.length(), "]");
+		res.append("AlbumDelMundial [Participantes registrados: ");
+		res.append(listaParticipantes.size());
+		
+		res.append(", Códigos redimidos: ");
+		res.append(codigosPromocionalesRedimidos.size());
+		
+		res.append(", Sorteos redimidos: ");
+		res.append(sorteosRedimidos.size());
+		
+		res.append("]");
 		return res.toString();
 	}
 }
