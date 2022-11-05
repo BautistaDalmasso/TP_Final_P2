@@ -256,4 +256,16 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			throw new RuntimeException("Participante no registrado.");
 		}
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder res = new StringBuilder();
+		res.append("AlbumDelMundial [Participantes: ");
+		for (Participante p : listaParticipantes) {
+			res.append(p.toString());
+			res.append(";");
+		}
+		res.replace(res.length()-1,res.length(), "]");
+		return res.toString();
+	}
 }
